@@ -1,14 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta Nazwa="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Domowy budżet</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="reset.css" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <nav class="nav-bar">
+      <div class="container-fluid">
+        <p class="h1 text-center"></p>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row incexpSum-div">
+        <p class="h2 text-center incexpSum">Bilans wynosi zero</p>
+      </div>
+      <div class="row">
+        <div class="income-main col-6">
+          <p class="h2 text-center">Przychody</p>
+          <div class="income-addUI addUI col-12">
+            <input class="addUI-element input income-text col-6" placeholder="Nazwa" type="text"></input>
+            <input class="addUI-element input income-amount col-3" placeholder="Kwota" type="number"></input>
+            <button class="addUI-element addUI-element-btn btn btn-income-add col-9" >Dodaj</button>
+          </div>
+          <div class="income-list col-12">
+            <ol class="income-list-group list-group list-group-numbered">
+              <!-- <il class="expenses-list-group-item list-group-item d-flex justify-content-between align-items-start" id="0">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">
+                    <p class="list-p">Nazwa Przycho 1</p>
+                  </div>
+                  <p class="list-p">11 PLN</p>
+                </div>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-edit" onclick="editIncome(this)" id="0" type="button">Edytuj</button>
+                  <button class="btn btn-income-delete" id="0" type="button" onclick="deleteIncome(this)">Usun</button>
+                </div>
+              </il>
+              <il class="expenses-list-group-item list-group-item d-flex justify-content-between align-items-start" id="1">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">
+                    <p class="list-p">Nazwa Przycho 2</p>
+                  </div>
+                  <p class="list-p">421 PLN</p>
+                </div>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-edit" onclick="editIncome(this)" id="1" type="button">Edytuj</button>
+                  <button class="btn btn-income-delete" id="1" type="button" onclick="deleteIncome(this)">Usun</button>
+                </div>
+              </il>
+              <il class="expenses-list-group-item list-group-item d-flex justify-content-between align-items-start" id="2">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">
+                    <p class="list-p">Nazwa Przycho 3</p>
+                  </div>
+                  <p class="list-p">5432 PLN</p>
+                </div>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-edit" onclick="editIncome(this)" id="2" type="button">Edytuj</button>
+                  <button class="btn btn-income-delete" id="2" type="button" onclick="deleteIncome(this)">Usun</button>
+                </div>
+              </il> -->
+            </ol>
+          </div>
+          <div class="income-sum col12"></div>
+        </div>
+        <div class="expenses-main col-6">
+          <p class="h2 text-center">Wydatki</p>
+          <div class="expenses-addUI addUI col-12">
+            <input class="addUI-element input expenses-text col-6" placeholder="Nazwa" type="text"></input>
+            <input class="addUI-element input expenses-amount col-3" placeholder="Kwota" type="number"></input>
+            <button class="addUI-element btn btn-expenses-add col-9" >Dodaj</button>
+        </div>
+          <div class="expenses-list col-12">
+            <ol class="expenses-list-group list-group list-group-numbered">
+              <!-- <il class="expenses-list-group-item list-group-item d-flex justify-content-between align-items-start" id="0">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">
+                    <p class="list-p">Nazwa Wydat 1</p>
+                  </div>
+                  <p class="list-p">262 PLN</p>
+                </div>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-edit" onclick="editIncome(this)" id="0" type="button">Edytuj</button>
+                  <button class="btn btn-income-delete" id="0" type="button" onclick="deleteIncome(this)">Usun</button>
+                </div>
+              </il>
+              <il class="expenses-list-group-item list-group-item d-flex justify-content-between align-items-start" id="1">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">
+                    <p class="list-p">Nazwa Wydatk 2</p>
+                  </div>
+                  <p class="list-p">2137 PLN</p>
+                </div>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-edit" onclick="editIncome(this)" id="1" type="button">Edytuj</button>
+                  <button class="btn btn-income-delete" id="1" type="button" onclick="deleteIncome(this)">Usun</button>
+                </div>
+              </il> -->
+            </ol>
+          </div>
+          <div class="expenses-sum col12"></div>
+        </div>
+      </div>
+    </div>
+
     <script src="app.js"></script>
-</body>
+
+  </body>
 </html>

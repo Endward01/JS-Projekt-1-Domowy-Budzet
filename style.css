@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+.nav-bar a {
+  text-align: center;
+}
+.col {
+  height: 100px;
+}
+.container {
+  height: 600px;
+}
+.row:nth-child(1) {
+  height: 50px;
+}
+.addUI {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.addUI-element {
+  margin: 5px;
+}
+.list-group {
+  overflow-y: scroll;
+  height: 600px;
+}
+.incexpSum-div{
+  height: 100px !important;
+  display: flex;
+  align-items: center;
+}
+.list-p{
+  margin: 0px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
