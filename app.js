@@ -26,14 +26,31 @@ let expensesSumValue = {
 };
 let incexpSumValue = 0;
 
-incomeAddBtn.addEventListener("click", insertIncomeObjToArr);
-expensesAddBtn.addEventListener("click", insertExpensesObjToArr);
+incomeAddBtn.addEventListener("click", appendIncomeItem);
+expensesAddBtn.addEventListener("click", appendExpensesItem);
 incomeSumDiv.textContent =
   "Suma Przychodów:" + " " + `${incomeSumValue.amount}` + "zł";
 incomeSumDiv.setAttribute("class", "h5");
 expensesSumDiv.textContent =
   "Suma Wydadków:" + " " + `${expensesSumValue.amount}` + "zł";
 expensesSumDiv.setAttribute("class", "h5");
+
+// append list item
+
+function appendIncomeItem() {
+  insertIncomeObjToArr();
+  removeAllIncomeChildNodes();
+  addIncomeItem();
+  incomeSum();
+  sumIncExp();
+}
+function appendExpensesItem() {
+  insertExpensesObjToArr();
+  removeAllExpensesChildNodes();
+  addExpensesItem();
+  expensesSum();
+  sumIncExp();
+}
 
 // enter input to the arr as an object
 
@@ -45,10 +62,6 @@ function insertIncomeObjToArr() {
     amount: checkIfNaN,
   };
   incomeArr.push(incomeObj);
-  removeAllIncomeChildNodes();
-  addIncomeItem();
-  incomeSum();
-  sumIncExp();
   return incomeArr;
 }
 function insertExpensesObjToArr() {
@@ -59,10 +72,6 @@ function insertExpensesObjToArr() {
     amount: checkIfNaN,
   };
   expensesArr.push(expensesObj);
-  removeAllExpensesChildNodes();
-  addExpensesItem();
-  expensesSum();
-  sumIncExp();
   return expensesArr;
 }
 
@@ -79,7 +88,7 @@ function removeAllExpensesChildNodes() {
   }
 }
 
-// append list item to the html body
+// create list item
 
 function addIncomeItem() {
   for (let i = 0; i < incomeArr.length; i++) {
@@ -104,7 +113,7 @@ function addIncomeItem() {
     // p2.setAttribute("contenteditable", "true");
     buttonDiv.setAttribute("class", "btn-group");
     buttonDiv.setAttribute("role", "group");
-    button1.setAttribute("class", "btn btn-edit");
+    button1.setAttribute("class", "btn btn-income-edit");
     button1.setAttribute("onclick", "editIncome(this)");
     button1.id = `${[i]}`;
     button1.setAttribute("type", "button");
@@ -118,7 +127,7 @@ function addIncomeItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = incomeArr[i].name;
-    p2.textContent = incomeArr[i].amount+" "+"PLN";
+    p2.textContent = incomeArr[i].amount + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.textContent = "Edytuj";
@@ -147,7 +156,7 @@ function addExpensesItem() {
     liSecondDiv.setAttribute("class", "fw-bold");
     buttonDiv.setAttribute("class", "btn-group");
     buttonDiv.setAttribute("role", "group");
-    button1.setAttribute("class", "btn btn-edit");
+    button1.setAttribute("class", "btn btn-expenses-edit");
     button1.id = `${[i]}`;
     button1.setAttribute("type", "button");
     button1.setAttribute("onclick", "editExpenses(this)");
@@ -161,7 +170,7 @@ function addExpensesItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = expensesArr[i].name;
-    p2.textContent = expensesArr[i].amount+" "+"PLN";
+    p2.textContent = expensesArr[i].amount + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.appendChild(document.createTextNode("Edytuj"));
@@ -249,7 +258,7 @@ function editIncome(elem) {
 function editExpenses(elem) {
   let index = elem.id;
   expensesArr[index].name = prompt("Wrowadz nowa Nazwe");
-  let checkIfNaN = Number(window.prompt("Wrowadz nowa Kwote"));;
+  let checkIfNaN = Number(window.prompt("Wrowadz nowa Kwote"));
   if (isNaN(checkIfNaN)) checkIfNaN = 0;
   expensesArr[index].amount = checkIfNaN;
   removeAllExpensesChildNodes();
