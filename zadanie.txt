@@ -1,4 +1,3 @@
-Czas na pierwszy projekt do wykonania. 
 Zadaniem będzie stworzenie prostej aplikacji monitorującej wydatki w budżecie domowym w danym miesiącu. 
 - Aplikacja ma umożliwiać wprowadzenie przychodów (np. wypłata, sprzedaż na allegro itp.) oraz wydatków (np. zakupy, rachunki) w formie list. 
 - Użytkownik powinien mieć również możliwość poprawienia danej pozycji pod kątem nazwy oraz kwoty. 
