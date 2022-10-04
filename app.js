@@ -13,6 +13,7 @@ const listElementExpenses = document.querySelector(".expenses-list-group-item");
 const expensesSumDiv = document.querySelector(".expenses-sum");
 
 const incexpSum = document.querySelector(".incexpSum");
+const custPromptBtn = document.querySelector(".custom-prompt-input-2");
 
 //core values
 
@@ -102,7 +103,7 @@ function addIncomeItem() {
     let button2 = document.createElement("button");
     li.setAttribute(
       "class",
-      "expenses-list-group-item list-group-item d-flex justify-content-between align-items-start"
+      "expenses-list-group-item list-group-item d-flex justify-content-between align-items-center"
     );
     li.id = `${[i]}`;
     liMainDiv.setAttribute("class", "ms-2 me-auto");
@@ -149,7 +150,7 @@ function addExpensesItem() {
     let button2 = document.createElement("button");
     li.setAttribute(
       "class",
-      "expenses-list-group-item list-group-item d-flex justify-content-between align-items-start"
+      "expenses-list-group-item list-group-item d-flex justify-content-between align-items-center"
     );
     li.id = `${[i]}`;
     liMainDiv.setAttribute("class", "ms-2 me-auto");
@@ -244,10 +245,15 @@ function deleteExpenses(elem) {
 
 // edit selected list item and sync list to new value
 
-function editIncome(elem) {
+async function editIncome(elem) {
   let index = elem.id;
-  incomeArr[index].name = prompt("Wrowadz nowa Nazwe");
-  let checkIfNaN = Number(window.prompt("Wrowadz nowa Kwote"));
+  newValue = {
+    name: 0,
+    amount: 0,
+  };
+  await customPrompt();
+  incomeArr[index].name = newValue.name;
+  let checkIfNaN = newValue.amount;
   if (isNaN(checkIfNaN)) checkIfNaN = 0;
   incomeArr[index].amount = checkIfNaN;
   removeAllIncomeChildNodes();
@@ -255,14 +261,58 @@ function editIncome(elem) {
   incomeSum();
   sumIncExp();
 }
-function editExpenses(elem) {
+async function editExpenses(elem) {
   let index = elem.id;
-  expensesArr[index].name = prompt("Wrowadz nowa Nazwe");
-  let checkIfNaN = Number(window.prompt("Wrowadz nowa Kwote"));
+  newValue = {
+    name: 0,
+    amount: 0,
+  };
+  await customPrompt();
+  expensesArr[index].name = newValue.name;
+  let checkIfNaN = newValue.amount;
   if (isNaN(checkIfNaN)) checkIfNaN = 0;
   expensesArr[index].amount = checkIfNaN;
   removeAllExpensesChildNodes();
   addExpensesItem();
   expensesSum();
   sumIncExp();
+}
+
+// block value input
+
+incomeAmount.addEventListener("keypress", function (evt) {
+  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
+    evt.preventDefault();
+  }
+});
+expensesAmount.addEventListener("keypress", function (evt) {
+  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
+    evt.preventDefault();
+  }
+});
+custPromptBtn.addEventListener("keypress", function (evt) {
+  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
+    evt.preventDefault();
+  }
+});
+
+// custom prompt
+
+function customPrompt() {
+  document.querySelector(".custom-prompt").classList.remove("hidden");
+  document.querySelector(".custom-prompt").classList.add("flex");
+  return new Promise((resolve) => {
+    document.querySelector(".custom-prompt-button").onclick = () => {
+      resolve(
+        (newValue = {
+          name: document.querySelector(".custom-prompt-input-1").value,
+          amount: document.querySelector(".custom-prompt-input-2")
+            .valueAsNumber,
+        })
+      );
+      // console.table(newValue);
+      document.querySelector(".custom-prompt").classList.add("hidden");
+      document.querySelector(".custom-prompt").classList.remove("flex");
+    };
+  });
 }

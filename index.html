@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-
+<!-- 
     <nav class="nav-bar">
       <div class="container-fluid">
         <p class="h1 text-center"></p>
       </div>
-    </nav>
+    </nav> -->
 
     <div class="container">
       <div class="row incexpSum-div">
@@ -31,8 +31,8 @@
         <div class="income-main col-6">
           <p class="h2 text-center">Przychody</p>
           <div class="income-addUI addUI col-12">
-            <input class="addUI-element input income-text col-6" placeholder="Nazwa" type="text"></input>
-            <input class="addUI-element input income-amount col-3" placeholder="Kwota" type="number"></input>
+            <input class="addUI-element input income-text col-6" placeholder="Nazwa" type="text" ></input>
+            <input class="addUI-element input income-amount col-3" placeholder="Kwota" type="number" inputmode="numeric"></input>
             <button class="addUI-element addUI-element-btn btn btn-income-add col-9" >Dodaj</button>
           </div>
           <div class="income-list col-12">
@@ -47,13 +47,24 @@
             <input class="addUI-element input expenses-text col-6" placeholder="Nazwa" type="text"></input>
             <input class="addUI-element input expenses-amount col-3" placeholder="Kwota" type="number"></input>
             <button class="addUI-element btn btn-expenses-add col-9" >Dodaj</button>
-        </div>
+          </div>
           <div class="expenses-list col-12">
             <ol class="expenses-list-group list-group list-group-numbered">
             </ol>
           </div>
           <div class="expenses-sum col12"></div>
         </div>
+      </div>
+    </div>
+
+    <div class="custom-prompt row col-12 hidden ">    
+      <div class="custom-prompt-inner col-3 justify-content-center align-items-between" id="custom-prompt">
+        <p class="">Wprowadz nowa nazwe *</p>
+        <input class="custom-prompt-input-1 addUI-element input col-11" placeholder="Nazwa" type="text">
+        <p class="">Wprowadz nowa kwote *</p>
+        <input class="custom-prompt-input-2 addUI-element input col-11" placeholder="Kwota" type="number">
+        <button class="custom-prompt-button btn">Wprowadz zmiane</button>
+        <p>*Jesli niechcesz zmieniac wartosci zostaw pole puste</p>
       </div>
     </div>
 
