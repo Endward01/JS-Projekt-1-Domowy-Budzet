@@ -280,21 +280,21 @@ async function editExpenses(elem) {
 
 // block value input
 
-incomeAmount.addEventListener("keypress", function (evt) {
-  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
-    evt.preventDefault();
-  }
-});
-expensesAmount.addEventListener("keypress", function (evt) {
-  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
-    evt.preventDefault();
-  }
-});
-custPromptBtn.addEventListener("keypress", function (evt) {
-  if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
-    evt.preventDefault();
-  }
-});
+// incomeAmount.addEventListener("keypress", function (evt) {
+//   if (evt.which != 8 && evt.which != 0 && evt.which < 48) {
+//     evt.preventDefault();
+//   }
+// });
+// expensesAmount.addEventListener("keypress", function (evt) {
+//   if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
+//     evt.preventDefault();
+//   }
+// });
+// custPromptBtn.addEventListener("keypress", function (evt) {
+//   if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
+//     evt.preventDefault();
+//   }
+// });
 
 // custom prompt
 
