@@ -128,7 +128,7 @@ function addIncomeItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = incomeArr[i].name;
-    p2.textContent = incomeArr[i].amount + " " + "PLN";
+    p2.textContent = (incomeArr[i].amount).toFixed(2) + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.textContent = "Edytuj";
@@ -171,7 +171,7 @@ function addExpensesItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = expensesArr[i].name;
-    p2.textContent = expensesArr[i].amount + " " + "PLN";
+    p2.textContent = (expensesArr[i].amount).toFixed(2) + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.appendChild(document.createTextNode("Edytuj"));
@@ -191,7 +191,7 @@ function incomeSum() {
     });
   }
   incomeSumDiv.textContent =
-    "Suma Przychodów:" + " " + `${incomeSumValue.amount}` + "zł";
+    "Suma Przychodów:" + " " + `${(incomeSumValue.amount).toFixed(2)}` + "zł";
 }
 function expensesSum() {
   if (expensesArr < 1) {
@@ -203,19 +203,19 @@ function expensesSum() {
   }
 
   expensesSumDiv.textContent =
-    "Suma Wydadków:" + " " + `${expensesSumValue.amount}` + "zł";
+    "Suma Wydadków:" + " " + `${(expensesSumValue.amount).toFixed(2)}` + "zł";
 }
 function sumIncExp() {
   incexpSumValue = incomeSumValue.amount - expensesSumValue.amount;
 
   if (incexpSumValue > 0) {
     incexpSum.textContent =
-      "Możesz jeszcze wydać" + " " + `${incexpSumValue}` + " " + "złotych";
+      "Możesz jeszcze wydać" + " " + `${(incexpSumValue).toFixed(2)}` + " " + "złotych";
   } else if (incexpSumValue < 0) {
     incexpSum.textContent =
       "Bilans jest ujemny. Jesteś na minusie" +
       " " +
-      `${incexpSumValue}` +
+      `${(incexpSumValue).toFixed(2)}` +
       " " +
       "złotych";
   } else {
