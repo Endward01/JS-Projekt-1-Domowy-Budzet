@@ -13,7 +13,6 @@ const listElementExpenses = document.querySelector(".expenses-list-group-item");
 const expensesSumDiv = document.querySelector(".expenses-sum");
 
 const incexpSum = document.querySelector(".incexpSum");
-const custPromptBtn = document.querySelector(".custom-prompt-input-2");
 
 //core values
 
@@ -42,6 +41,7 @@ function appendIncomeItem() {
   insertIncomeObjToArr();
   removeAllIncomeChildNodes();
   addIncomeItem();
+  clearValueInn();
   incomeSum();
   sumIncExp();
 }
@@ -49,6 +49,7 @@ function appendExpensesItem() {
   insertExpensesObjToArr();
   removeAllExpensesChildNodes();
   addExpensesItem();
+  clearValueExp();
   expensesSum();
   sumIncExp();
 }
@@ -128,7 +129,7 @@ function addIncomeItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = incomeArr[i].name;
-    p2.textContent = (incomeArr[i].amount).toFixed(2) + " " + "PLN";
+    p2.textContent = incomeArr[i].amount.toFixed(2) + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.textContent = "Edytuj";
@@ -171,7 +172,7 @@ function addExpensesItem() {
     liSecondDiv.appendChild(p1);
     liMainDiv.appendChild(p2);
     p1.textContent = expensesArr[i].name;
-    p2.textContent = (expensesArr[i].amount).toFixed(2) + " " + "PLN";
+    p2.textContent = expensesArr[i].amount.toFixed(2) + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
     button1.appendChild(document.createTextNode("Edytuj"));
@@ -191,7 +192,7 @@ function incomeSum() {
     });
   }
   incomeSumDiv.textContent =
-    "Suma Przychodów:" + " " + `${(incomeSumValue.amount).toFixed(2)}` + "zł";
+    "Suma Przychodów:" + " " + `${incomeSumValue.amount.toFixed(2)}` + "zł";
 }
 function expensesSum() {
   if (expensesArr < 1) {
@@ -203,19 +204,23 @@ function expensesSum() {
   }
 
   expensesSumDiv.textContent =
-    "Suma Wydadków:" + " " + `${(expensesSumValue.amount).toFixed(2)}` + "zł";
+    "Suma Wydadków:" + " " + `${expensesSumValue.amount.toFixed(2)}` + "zł";
 }
 function sumIncExp() {
   incexpSumValue = incomeSumValue.amount - expensesSumValue.amount;
 
   if (incexpSumValue > 0) {
     incexpSum.textContent =
-      "Możesz jeszcze wydać" + " " + `${(incexpSumValue).toFixed(2)}` + " " + "złotych";
+      "Możesz jeszcze wydać" +
+      " " +
+      `${incexpSumValue.toFixed(2)}` +
+      " " +
+      "złotych";
   } else if (incexpSumValue < 0) {
     incexpSum.textContent =
       "Bilans jest ujemny. Jesteś na minusie" +
       " " +
-      `${(incexpSumValue).toFixed(2)}` +
+      `${incexpSumValue.toFixed(2)}` +
       " " +
       "złotych";
   } else {
@@ -252,10 +257,23 @@ async function editIncome(elem) {
     amount: 0,
   };
   await customPrompt();
-  incomeArr[index].name = newValue.name;
-  let checkIfNaN = newValue.amount;
-  if (isNaN(checkIfNaN)) checkIfNaN = 0;
-  incomeArr[index].amount = checkIfNaN;
+  if (newValue.name == "" && newValue.amount == 0) {
+    incomeArr[index].name = incomeArr[index].name;
+    incomeArr[index].amount = incomeArr[index].amount;
+  } else if (newValue.name != "" && newValue.amount == 0) {
+    incomeArr[index].name = newValue.name;
+    incomeArr[index].amount = incomeArr[index].amount;
+  } else if (newValue.name == "" && newValue.amount != 0) {
+    incomeArr[index].name = incomeArr[index].name;
+    let checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    incomeArr[index].amount = checkIfNaN;
+  } else {
+    incomeArr[index].name = newValue.name;
+    let checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    incomeArr[index].amount = checkIfNaN;
+  }
   removeAllIncomeChildNodes();
   addIncomeItem();
   incomeSum();
@@ -268,33 +286,28 @@ async function editExpenses(elem) {
     amount: 0,
   };
   await customPrompt();
-  expensesArr[index].name = newValue.name;
-  let checkIfNaN = newValue.amount;
-  if (isNaN(checkIfNaN)) checkIfNaN = 0;
-  expensesArr[index].amount = checkIfNaN;
+  if (newValue.name == "" && newValue.amount == 0) {
+    expensesArr[index].name = expensesArr[index].name;
+    expensesArr[index].amount = expensesArr[index].amount;
+  } else if (newValue.name != "" && newValue.amount == 0) {
+    expensesArr[index].name = newValue.name;
+    expensesArr[index].amount = expensesArr[index].amount;
+  } else if (newValue.name == "" && newValue.amount != 0) {
+    expensesArr[index].name = expensesArr[index].name;
+    let checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    expensesArr[index].amount = checkIfNaN;
+  } else {
+    expensesArr[index].name = newValue.name;
+    let checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    expensesArr[index].amount = checkIfNaN;
+  }
   removeAllExpensesChildNodes();
   addExpensesItem();
   expensesSum();
   sumIncExp();
 }
-
-// block value input
-
-// incomeAmount.addEventListener("keypress", function (evt) {
-//   if (evt.which != 8 && evt.which != 0 && evt.which < 48) {
-//     evt.preventDefault();
-//   }
-// });
-// expensesAmount.addEventListener("keypress", function (evt) {
-//   if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
-//     evt.preventDefault();
-//   }
-// });
-// custPromptBtn.addEventListener("keypress", function (evt) {
-//   if ((evt.which != 8 && evt.which != 0 && evt.which < 48) || evt.which > 57) {
-//     evt.preventDefault();
-//   }
-// });
 
 // custom prompt
 
@@ -303,16 +316,34 @@ function customPrompt() {
   document.querySelector(".custom-prompt").classList.add("flex");
   return new Promise((resolve) => {
     document.querySelector(".custom-prompt-button").onclick = () => {
+      let checkIfNaN = document.querySelector(
+        ".custom-prompt-input-2"
+      ).valueAsNumber;
+      if (isNaN(checkIfNaN)) checkIfNaN = 0;
       resolve(
         (newValue = {
           name: document.querySelector(".custom-prompt-input-1").value,
-          amount: document.querySelector(".custom-prompt-input-2")
-            .valueAsNumber,
+          amount: checkIfNaN,
         })
       );
-      // console.table(newValue);
       document.querySelector(".custom-prompt").classList.add("hidden");
       document.querySelector(".custom-prompt").classList.remove("flex");
+      clearValuePromp();
     };
   });
+}
+
+// clear value input after enter
+
+function clearValueInn() {
+  incomeText.value = "";
+  incomeAmount.value = "";
+}
+function clearValueExp() {
+  expensesText.value = "";
+  expensesAmount.value = "";
+}
+function clearValuePromp() {
+  document.querySelector(".custom-prompt-input-1").value = "";
+  document.querySelector(".custom-prompt-input-2").value = "";
 }
