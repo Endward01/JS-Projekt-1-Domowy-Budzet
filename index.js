@@ -110,9 +110,7 @@ function addIncomeItem() {
     liMainDiv.setAttribute("class", "ms-2 me-auto");
     p1.setAttribute("class", "list-p");
     p2.setAttribute("class", "list-p");
-    // p1.setAttribute("contenteditable", "true");
     liSecondDiv.setAttribute("class", "fw-bold");
-    // p2.setAttribute("contenteditable", "true");
     buttonDiv.setAttribute("class", "btn-group");
     buttonDiv.setAttribute("role", "group");
     button1.setAttribute("class", "btn btn-income-edit");
@@ -175,9 +173,9 @@ function addExpensesItem() {
     p2.textContent = expensesArr[i].amount.toFixed(2) + " " + "PLN";
     li.appendChild(buttonDiv);
     buttonDiv.appendChild(button1);
-    button1.appendChild(document.createTextNode("Edytuj"));
+    button1.textContent = "Edytuj";
     buttonDiv.appendChild(button2);
-    button2.appendChild(document.createTextNode("Usun"));
+    button2.textContent = "Usun";
   }
 }
 
