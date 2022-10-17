@@ -2,50 +2,54 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-p,input,button, .h5{
-  color:white;
+p,
+input,
+button,
+.h5 {
+  color: white;
 }
-.h5{
+.h5 {
   margin-left: 10px;
 }
-.input{
+.input {
   padding-left: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: #2b2b2b;
-  color:white;
-  border:unset;
+  color: white;
+  border: unset;
 }
-.btn{
+.btn {
   background-color: #2b2b2b;
-  color:white;
+  color: white;
 }
-.btn:hover{
-  background-color: #181818 !important; 
-  color:white !important;
+.btn:first-child:hover,
+:not(.btn-check)+.btn:hover,
+.btn:hover {
+  background-color: #181818;
+  color: white;
 }
-.list-group-item{
+.list-group-item {
   background: #2b2b2b;
 }
-.list-group-item::before{
-  color:white;
+.list-group-item::before {
+  color: white;
 }
-body{
-  background: #181818
+body {
+  background: #181818;
 }
-.addUI{
+.addUI {
   justify-content: center;
 }
-.income-main{
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+.income-main,
+.expenses-main {
   background: #1d1d1d;
   padding: 5px;
 }
-.expenses-main{
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-  background: #1d1d1d;
-  padding: 5px;
+.income-main {
+  border-radius: 1rem 0 0 1rem;
+}
+.expenses-main {
+  border-radius: 0 1rem 1rem 0;
 }
 .container {
   height: 600px;
@@ -68,7 +72,7 @@ body{
   height: 650px;
 }
 .incexpSum-div {
-  height: 100px !important;
+  margin: 25px 0;
   display: flex;
   align-items: center;
 }
@@ -84,14 +88,10 @@ body{
 ::-webkit-scrollbar-thumb {
   background: #161616;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #161616;
-}
-
 .hidden {
   display: none;
 }
-.flex{
+.flex {
   display: flex;
 }
 .custom-prompt {
@@ -106,16 +106,15 @@ body{
   display: flex;
   flex-direction: column;
   color: #212529;
-  background-color: #181818 ;
+  background-color: #181818;
   border-radius: 1rem;
 }
-.custom-prompt-inner p:nth-child(6){
+.custom-prompt-inner p:nth-child(6) {
   color: rgba(211, 211, 211, 0.25);
 }
 .custom-prompt-inner p,
 .custom-prompt-inner .input,
-.custom-prompt-inner .btn{
-  margin:5px auto;
+.custom-prompt-inner .btn {
+  margin: 5px auto;
   color: white;
 }
-
