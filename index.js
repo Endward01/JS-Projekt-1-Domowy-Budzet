@@ -238,23 +238,8 @@ function deleteItem(elem, parameter) {
     sum("expenses");
   }
 }
-// function deleteIncome(elem, parameter) {
-//   const index = elem.id;
-//   incomeArr.splice(index, 1);
-//   removeAllChildNodes("income");
-//   addItem("income");
-//   sum("income");
-// }
-// function deleteExpenses(elem) {
-//   const index = elem.id;
-//   expensesArr.splice(index, 1);
-//   removeAllChildNodes("expenses");
-//   addItem("expenses");
-//   sum("expenses");
-// }
 
 // edit selected list item and sync list to new value
-
 async function editItem(elem, parameter){
   if (parameter == "income") {
     const index = elem.id;
@@ -312,62 +297,6 @@ async function editItem(elem, parameter){
     sum("expenses");
   }
 }
-// async function editIncome(elem) {
-//   const index = elem.id;
-//   newValue = {
-//     name: 0,
-//     amount: 0,
-//   };
-//   await customPrompt();
-//   if (newValue.name == "" && newValue.amount == 0) {
-//     incomeArr[index].name = incomeArr[index].name;
-//     incomeArr[index].amount = incomeArr[index].amount;
-//   } else if (newValue.name != "" && newValue.amount == 0) {
-//     incomeArr[index].name = newValue.name;
-//     incomeArr[index].amount = incomeArr[index].amount;
-//   } else if (newValue.name == "" && newValue.amount != 0) {
-//     incomeArr[index].name = incomeArr[index].name;
-//     let checkIfNaN = newValue.amount;
-//     if (isNaN(checkIfNaN)) checkIfNaN = 0;
-//     incomeArr[index].amount = checkIfNaN;
-//   } else {
-//     incomeArr[index].name = newValue.name;
-//     let checkIfNaN = newValue.amount;
-//     if (isNaN(checkIfNaN)) checkIfNaN = 0;
-//     incomeArr[index].amount = checkIfNaN;
-//   }
-//   removeAllChildNodes("income");
-//   addItem("income");
-//   sum("income");
-// }
-// async function editExpenses(elem) {
-//   const index = elem.id;
-//   newValue = {
-//     name: 0,
-//     amount: 0,
-//   };
-//   await customPrompt();
-//   if (newValue.name == "" && newValue.amount == 0) {
-//     expensesArr[index].name = expensesArr[index].name;
-//     expensesArr[index].amount = expensesArr[index].amount;
-//   } else if (newValue.name != "" && newValue.amount == 0) {
-//     expensesArr[index].name = newValue.name;
-//     expensesArr[index].amount = expensesArr[index].amount;
-//   } else if (newValue.name == "" && newValue.amount != 0) {
-//     expensesArr[index].name = expensesArr[index].name;
-//     const checkIfNaN = newValue.amount;
-//     if (isNaN(checkIfNaN)) checkIfNaN = 0;
-//     expensesArr[index].amount = checkIfNaN;
-//   } else {
-//     expensesArr[index].name = newValue.name;
-//     const checkIfNaN = newValue.amount;
-//     if (isNaN(checkIfNaN)) checkIfNaN = 0;
-//     expensesArr[index].amount = checkIfNaN;
-//   }
-//   removeAllChildNodes("expenses");
-//   addItem("expenses");
-//   sum("expenses");
-// }
 
 // custom prompt
 function customPrompt() {
