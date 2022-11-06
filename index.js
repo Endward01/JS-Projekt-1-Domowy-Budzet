@@ -24,13 +24,12 @@ let expensesSumValue = {
   amount: 0,
 };
 let incexpSumValue = 0;
+
 const inc = "income";
 const expe = "expenses";
 
 incomeAddBtn.addEventListener("click", () => appendItem(inc));
 expensesAddBtn.addEventListener("click", () => appendItem(expe));
-incomeSumDiv.textContent = `Suma Przychodów: ${incomeSumValue.amount} zł`;
-expensesSumDiv.textContent = `Suma Wydatków: ${expensesSumValue.amount} zł`;
 
 // append list item
 function appendItem(parameter) {
@@ -40,8 +39,8 @@ function appendItem(parameter) {
   clearValue(parameter);
   sum(parameter);
 }
-//block unwanted value in input
 
+//block unwanted value in input
 allAmountInputs.forEach((e) => {
   e.addEventListener("keypress", (e) => {
     if (!(e.charCode > 45 && e.charCode < 58)) {
@@ -57,6 +56,7 @@ function insertObjToArr(parameter) {
 
   let checkIfNaN = inputValueAmount.valueAsNumber;
   if (isNaN(checkIfNaN)) checkIfNaN = 0;
+
   const objectToArr = {
     name: inputValueText.value,
     amount: checkIfNaN,
@@ -81,97 +81,75 @@ function removeAllChildNodes(parameter) {
 
 // create list item
 function addItem(parameter) {
+  let arrToAddItem;
+
   if (parameter === "income") {
-    for (let i = 0; i < incomeArr.length; i++) {
-      const li = document.createElement("il");
-      const p1 = document.createElement("p");
-      const p2 = document.createElement("p");
-      const liMainDiv = document.createElement("div");
-      const liSecondDiv = document.createElement("div");
-      const buttonDiv = document.createElement("div");
-      const button1 = document.createElement("button");
-      const button2 = document.createElement("button");
-      li.setAttribute(
-        "class",
-        "expenses-list-group-item list-group-item d-flex justify-content-between align-items-center"
-      );
-      li.id = `${[i]}`;
-      liMainDiv.setAttribute("class", "ms-2 me-auto");
-      p1.setAttribute("class", "list-p");
-      p2.setAttribute("class", "list-p");
-      liSecondDiv.setAttribute("class", "fw-bold");
-      buttonDiv.setAttribute("class", "btn-group");
-      buttonDiv.setAttribute("role", "group");
-      button1.setAttribute("class", "btn btn-income-edit");
-      button1.setAttribute("onclick", "editItem(this, inc)");
-      button1.id = `${[i]}`;
-      button1.setAttribute("type", "button");
-      button2.setAttribute("class", "btn btn-income-delete");
-      button2.id = `${[i]}`;
-      button2.setAttribute("type", "button");
-      button2.setAttribute("onclick", "deleteItem(this, inc)");
-      incomeList.appendChild(li);
-      li.appendChild(liMainDiv);
-      liMainDiv.appendChild(liSecondDiv);
-      liSecondDiv.appendChild(p1);
-      liMainDiv.appendChild(p2);
-      p1.textContent = incomeArr[i].name;
-      p2.textContent = incomeArr[i].amount.toFixed(2) + " " + "PLN";
-      li.appendChild(buttonDiv);
-      buttonDiv.appendChild(button1);
-      button1.textContent = "Edytuj";
-      buttonDiv.appendChild(button2);
-      button2.textContent = "Usuń";
-    }
+    arrToAddItem = incomeArr;
   } else {
-    for (let i = 0; i < expensesArr.length; i++) {
-      const li = document.createElement("il");
-      const p1 = document.createElement("p");
-      const p2 = document.createElement("p");
-      const liMainDiv = document.createElement("div");
-      p1.setAttribute("class", "list-p");
-      p2.setAttribute("class", "list-p");
-      const liSecondDiv = document.createElement("div");
-      const buttonDiv = document.createElement("div");
-      const button1 = document.createElement("button");
-      const button2 = document.createElement("button");
-      li.setAttribute(
-        "class",
-        "expenses-list-group-item list-group-item d-flex justify-content-between align-items-center"
-      );
-      li.id = `${[i]}`;
-      liMainDiv.setAttribute("class", "ms-2 me-auto");
-      liSecondDiv.setAttribute("class", "fw-bold");
-      buttonDiv.setAttribute("class", "btn-group");
-      buttonDiv.setAttribute("role", "group");
-      button1.setAttribute("class", "btn btn-expenses-edit");
-      button1.id = `${[i]}`;
-      button1.setAttribute("type", "button");
+    arrToAddItem = expensesArr;
+  }
+
+  for (let i = 0; i < arrToAddItem.length; i++) {
+    const li = document.createElement("il");
+    const p1 = document.createElement("p");
+    const p2 = document.createElement("p");
+    const liMainDiv = document.createElement("div");
+    const liSecondDiv = document.createElement("div");
+    const buttonDiv = document.createElement("div");
+    const button1 = document.createElement("button");
+    const button2 = document.createElement("button");
+
+    li.classList.add(
+      "list-group-item",
+      "d-flex",
+      "justify-content-between",
+      "align-items-center"
+    );
+    li.id = `${[i]}`;
+    liMainDiv.classList.add("ms-2", "me-auto");
+    p1.classList.add("list-p");
+    p1.textContent = arrToAddItem[i].name;
+    p2.classList.add("list-p");
+    p2.textContent = arrToAddItem[i].amount.toFixed(2) + " " + "PLN";
+    liSecondDiv.classList.add("fw-bold");
+    buttonDiv.setAttribute("class", "btn-group");
+    buttonDiv.setAttribute("role", "group");
+    button1.id = `${[i]}`;
+    button1.setAttribute("type", "button");
+    button1.classList.add("btn");
+    if (parameter === "income") {
+      button1.setAttribute("onclick", "editItem(this, inc)");
+    } else {
       button1.setAttribute("onclick", "editItem(this, expe)");
-      button2.setAttribute("class", "btn btn-expenses-delete");
-      button2.id = `${[i]}`;
-      button2.setAttribute("type", "button");
-      button2.setAttribute("onclick", "deleteItem(this, expe)");
-      expensesList.appendChild(li);
-      li.appendChild(liMainDiv);
-      liMainDiv.appendChild(liSecondDiv);
-      liSecondDiv.appendChild(p1);
-      liMainDiv.appendChild(p2);
-      p1.textContent = expensesArr[i].name;
-      p2.textContent = expensesArr[i].amount.toFixed(2) + " " + "PLN";
-      li.appendChild(buttonDiv);
-      buttonDiv.appendChild(button1);
-      button1.textContent = "Edytuj";
-      buttonDiv.appendChild(button2);
-      button2.textContent = "Usuń";
     }
+    button2.id = `${[i]}`;
+    button2.setAttribute("type", "button");
+    button2.classList.add("btn");
+    if (parameter === "income") {
+      button2.setAttribute("onclick", "deleteItem(this, inc)");
+    } else {
+      button2.setAttribute("onclick", "deleteItem(this, expe)");
+    }
+    if (parameter === "income") {
+      incomeList.appendChild(li);
+    } else {
+      expensesList.appendChild(li);
+    }
+    li.appendChild(liMainDiv);
+    liMainDiv.appendChild(liSecondDiv);
+    liSecondDiv.appendChild(p1);
+    liMainDiv.appendChild(p2);
+    li.appendChild(buttonDiv);
+    buttonDiv.appendChild(button1);
+    button1.textContent = "Edytuj";
+    buttonDiv.appendChild(button2);
+    button2.textContent = "Usuń";
   }
 }
 
 // sum amount of income and expenses and their value subtracted
 function sum(parameter) {
   if (parameter === "income") {
-
     if (incomeArr < 1) {
       incomeSumValue.amount = 0;
     } else {
@@ -180,10 +158,10 @@ function sum(parameter) {
       });
     }
 
-    incomeSumDiv.textContent = `Suma Przychodów: ${incomeSumValue.amount.toFixed(2)} zł`;
-
+    incomeSumDiv.textContent = `Suma Przychodów: ${incomeSumValue.amount.toFixed(
+      2
+    )} zł`;
   } else {
-
     if (expensesArr < 1) {
       expensesSumValue.amount = 0;
     } else {
@@ -192,8 +170,9 @@ function sum(parameter) {
       });
     }
 
-    expensesSumDiv.textContent = `Suma Wydatków: ${expensesSumValue.amount.toFixed(2)} zł`;
-
+    expensesSumDiv.textContent = `Suma Wydatków: ${expensesSumValue.amount.toFixed(
+      2
+    )} zł`;
   }
 
   incexpSumValue = incomeSumValue.amount - expensesSumValue.amount;
@@ -209,8 +188,6 @@ function sum(parameter) {
   } else {
     incexpSum.textContent = "Bilans wynosi zero.";
   }
-
-  return incexpSumValue;
 }
 
 // clear value input after enter
@@ -243,47 +220,31 @@ function deleteItem(elem, parameter) {
 
 // edit selected list item and sync list to new value
 async function editItem(elem, parameter) {
-  const index = elem.id;
   const newValue = await customPrompt();
+  let arrToEdit;
 
   if (parameter === "income") {
-    if (newValue.name === "" && newValue.amount === 0) {
-      incomeArr[index].name = incomeArr[index].name;
-      incomeArr[index].amount = incomeArr[index].amount;
-    } else if (newValue.name !== "" && newValue.amount === 0) {
-      incomeArr[index].name = newValue.name;
-      incomeArr[index].amount = incomeArr[index].amount;
-    } else if (newValue.name === "" && newValue.amount !== 0) {
-      incomeArr[index].name = incomeArr[index].name;
-      let checkIfNaN = newValue.amount;
-      if (isNaN(checkIfNaN)) checkIfNaN = 0;
-      incomeArr[index].amount = checkIfNaN;
-    } else {
-      incomeArr[index].name = newValue.name;
-      let checkIfNaN = newValue.amount;
-      if (isNaN(checkIfNaN)) checkIfNaN = 0;
-      incomeArr[index].amount = checkIfNaN;
-    }
+    arrToEdit = incomeArr[elem.id];
   } else {
-    if (newValue.name === "" && newValue.amount === 0) {
-      expensesArr[index].name = expensesArr[index].name;
-      expensesArr[index].amount = expensesArr[index].amount;
-    } else if (newValue.name !== "" && newValue.amount === 0) {
-      expensesArr[index].name = newValue.name;
-      expensesArr[index].amount = expensesArr[index].amount;
-    } else if (newValue.name === "" && newValue.amount !== 0) {
-      expensesArr[index].name = expensesArr[index].name;
-      const checkIfNaN = newValue.amount;
-      if (isNaN(checkIfNaN)) checkIfNaN = 0;
-      expensesArr[index].amount = checkIfNaN;
-    } else {
-      expensesArr[index].name = newValue.name;
-      const checkIfNaN = newValue.amount;
-      if (isNaN(checkIfNaN)) checkIfNaN = 0;
-      expensesArr[index].amount = checkIfNaN;
-    }
+    arrToEdit = expensesArr[elem.id];
   }
-
+  if (newValue.name === "" && newValue.amount === 0) {
+    arrToEdit.name = arrToEdit.name;
+    arrToEdit.amount = arrToEdit.amount;
+  } else if (newValue.name !== "" && newValue.amount === 0) {
+    arrToEdit.name = newValue.name;
+    arrToEdit.amount = arrToEdit.amount;
+  } else if (newValue.name === "" && newValue.amount !== 0) {
+    arrToEdit.name = arrToEdit.name;
+    const checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    arrToEdit.amount = checkIfNaN;
+  } else {
+    arrToEdit.name = newValue.name;
+    const checkIfNaN = newValue.amount;
+    if (isNaN(checkIfNaN)) checkIfNaN = 0;
+    arrToEdit.amount = checkIfNaN;
+  }
   removeAllChildNodes(parameter);
   addItem(parameter);
   sum(parameter);
