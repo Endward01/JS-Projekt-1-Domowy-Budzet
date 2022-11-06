@@ -11,6 +11,7 @@ const expensesAddBtn = document.querySelector(".btn-expenses-add");
 const expensesSumDiv = document.querySelector(".expenses-sum");
 
 const incexpSum = document.querySelector(".incexpSum");
+const allAmountInputs = document.querySelectorAll(".input-amount");
 
 //core values
 
@@ -39,46 +40,48 @@ function appendItem(parameter) {
   clearValue(parameter);
   sum(parameter);
 }
+//block unwanted value in input
+
+allAmountInputs.forEach((e) => {
+  e.addEventListener("keypress", (e) => {
+    if (!(e.charCode > 45 && e.charCode < 58)) {
+      e.preventDefault();
+    }
+  });
+});
 
 // enter input to the arr as an object
 function insertObjToArr(parameter) {
-  if (parameter == "income") {
-    let checkIfNaN = incomeAmount.valueAsNumber;
-    if (isNaN(checkIfNaN)) checkIfNaN = 0;
-    const incomeObj = {
-      name: incomeText.value,
-      amount: checkIfNaN,
-    };
-    incomeArr.push(incomeObj);
+  const inputValueText = document.querySelector(`.${parameter}-text`);
+  const inputValueAmount = document.querySelector(`.${parameter}-amount`);
+
+  let checkIfNaN = inputValueAmount.valueAsNumber;
+  if (isNaN(checkIfNaN)) checkIfNaN = 0;
+  const objectToArr = {
+    name: inputValueText.value,
+    amount: checkIfNaN,
+  };
+
+  if (parameter === "income") {
+    incomeArr.push(objectToArr);
     return incomeArr;
-  } else if (parameter == "expenses") {
-    let checkIfNaN = expensesAmount.valueAsNumber;
-    if (isNaN(checkIfNaN)) checkIfNaN = 0;
-    const expensesObj = {
-      name: expensesText.value,
-      amount: checkIfNaN,
-    };
-    expensesArr.push(expensesObj);
+  } else {
+    expensesArr.push(objectToArr);
     return expensesArr;
   }
 }
 
 // delete all list items
 function removeAllChildNodes(parameter) {
-  if (parameter == "income") {
-    while (incomeList.firstChild) {
-      incomeList.removeChild(incomeList.firstChild);
-    }
-  } else if (parameter == "expenses") {
-    while (expensesList.firstChild) {
-      expensesList.removeChild(expensesList.firstChild);
-    }
+  const list = document.querySelector(`.${parameter}-list-group`);
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
   }
 }
 
 // create list item
 function addItem(parameter) {
-  if (parameter == "income") {
+  if (parameter === "income") {
     for (let i = 0; i < incomeArr.length; i++) {
       const li = document.createElement("il");
       const p1 = document.createElement("p");
@@ -120,7 +123,7 @@ function addItem(parameter) {
       buttonDiv.appendChild(button2);
       button2.textContent = "Usuń";
     }
-  } else if (parameter == "expenses") {
+  } else {
     for (let i = 0; i < expensesArr.length; i++) {
       const li = document.createElement("il");
       const p1 = document.createElement("p");
@@ -167,7 +170,8 @@ function addItem(parameter) {
 
 // sum amount of income and expenses and their value subtracted
 function sum(parameter) {
-  if (parameter == "income") {
+  if (parameter === "income") {
+
     if (incomeArr < 1) {
       incomeSumValue.amount = 0;
     } else {
@@ -175,10 +179,11 @@ function sum(parameter) {
         return { amount: previousValue.amount + currentValue.amount };
       });
     }
-    incomeSumDiv.textContent = `Suma Przychodów: ${incomeSumValue.amount.toFixed(
-      2
-    )} zł`;
-  } else if (parameter == "expenses") {
+
+    incomeSumDiv.textContent = `Suma Przychodów: ${incomeSumValue.amount.toFixed(2)} zł`;
+
+  } else {
+
     if (expensesArr < 1) {
       expensesSumValue.amount = 0;
     } else {
@@ -187,11 +192,12 @@ function sum(parameter) {
       });
     }
 
-    expensesSumDiv.textContent = `Suma Wydatków: ${expensesSumValue.amount.toFixed(
-      2
-    )} zł`;
+    expensesSumDiv.textContent = `Suma Wydatków: ${expensesSumValue.amount.toFixed(2)} zł`;
+
   }
+
   incexpSumValue = incomeSumValue.amount - expensesSumValue.amount;
+
   if (incexpSumValue > 0) {
     incexpSum.textContent = `Możesz jeszcze wydać ${incexpSumValue.toFixed(
       2
@@ -203,18 +209,17 @@ function sum(parameter) {
   } else {
     incexpSum.textContent = "Bilans wynosi zero.";
   }
+
   return incexpSumValue;
 }
 
 // clear value input after enter
 function clearValue(parameter) {
-  if (parameter == "income") {
-    incomeText.value = "";
-    incomeAmount.value = "";
-  } else if (parameter == "expenses") {
-    expensesText.value = "";
-    expensesAmount.value = "";
-  }
+  const inputValueText = document.querySelector(`.${parameter}-text`);
+  const inputValueAmount = document.querySelector(`.${parameter}-amount`);
+
+  inputValueText.value = "";
+  inputValueAmount.value = "";
 }
 function clearValuePromp() {
   document.querySelector(".custom-prompt-input-1").value = "";
@@ -223,38 +228,32 @@ function clearValuePromp() {
 
 // delete selected list item and sync list to new value
 function deleteItem(elem, parameter) {
-  if (parameter == "income") {
-    const index = elem.id;
+  const index = elem.id;
+
+  if (parameter === "income") {
     incomeArr.splice(index, 1);
-    removeAllChildNodes("income");
-    addItem("income");
-    sum("income");
-  }
-  else if (parameter == "expenses") {
-    const index = elem.id;
+  } else {
     expensesArr.splice(index, 1);
-    removeAllChildNodes("expenses");
-    addItem("expenses");
-    sum("expenses");
   }
+
+  removeAllChildNodes(parameter);
+  addItem(parameter);
+  sum(parameter);
 }
 
 // edit selected list item and sync list to new value
-async function editItem(elem, parameter){
-  if (parameter == "income") {
-    const index = elem.id;
-    newValue = {
-      name: 0,
-      amount: 0,
-    };
-    await customPrompt();
-    if (newValue.name == "" && newValue.amount == 0) {
+async function editItem(elem, parameter) {
+  const index = elem.id;
+  const newValue = await customPrompt();
+
+  if (parameter === "income") {
+    if (newValue.name === "" && newValue.amount === 0) {
       incomeArr[index].name = incomeArr[index].name;
       incomeArr[index].amount = incomeArr[index].amount;
-    } else if (newValue.name != "" && newValue.amount == 0) {
+    } else if (newValue.name !== "" && newValue.amount === 0) {
       incomeArr[index].name = newValue.name;
       incomeArr[index].amount = incomeArr[index].amount;
-    } else if (newValue.name == "" && newValue.amount != 0) {
+    } else if (newValue.name === "" && newValue.amount !== 0) {
       incomeArr[index].name = incomeArr[index].name;
       let checkIfNaN = newValue.amount;
       if (isNaN(checkIfNaN)) checkIfNaN = 0;
@@ -265,23 +264,14 @@ async function editItem(elem, parameter){
       if (isNaN(checkIfNaN)) checkIfNaN = 0;
       incomeArr[index].amount = checkIfNaN;
     }
-    removeAllChildNodes("income");
-    addItem("income");
-    sum("income");
-  } else if (parameter == "expenses") {
-    const index = elem.id;
-    newValue = {
-      name: 0,
-      amount: 0,
-    };
-    await customPrompt();
-    if (newValue.name == "" && newValue.amount == 0) {
+  } else {
+    if (newValue.name === "" && newValue.amount === 0) {
       expensesArr[index].name = expensesArr[index].name;
       expensesArr[index].amount = expensesArr[index].amount;
-    } else if (newValue.name != "" && newValue.amount == 0) {
+    } else if (newValue.name !== "" && newValue.amount === 0) {
       expensesArr[index].name = newValue.name;
       expensesArr[index].amount = expensesArr[index].amount;
-    } else if (newValue.name == "" && newValue.amount != 0) {
+    } else if (newValue.name === "" && newValue.amount !== 0) {
       expensesArr[index].name = expensesArr[index].name;
       const checkIfNaN = newValue.amount;
       if (isNaN(checkIfNaN)) checkIfNaN = 0;
@@ -292,10 +282,11 @@ async function editItem(elem, parameter){
       if (isNaN(checkIfNaN)) checkIfNaN = 0;
       expensesArr[index].amount = checkIfNaN;
     }
-    removeAllChildNodes("expenses");
-    addItem("expenses");
-    sum("expenses");
   }
+
+  removeAllChildNodes(parameter);
+  addItem(parameter);
+  sum(parameter);
 }
 
 // custom prompt
